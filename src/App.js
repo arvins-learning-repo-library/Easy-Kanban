@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Task from './Task'
+import {DragDropContext} from 'react-beautiful-dnd'
 
 class App extends React.Component {
 
@@ -59,7 +60,7 @@ class App extends React.Component {
   createTask() {
     console.log(this.state.entry)
 
-    if (this.state.entry.trim() != "") {
+    if (this.state.entry.trim() !== "") {
 
       this.setState(prevState => ({
         tasks: [...prevState.tasks, {
@@ -84,8 +85,13 @@ class App extends React.Component {
     </div>
   }
 
+  onDragEnd = result => {
+    
+  }
+
   render() {
     return <div>
+      <DragDropContext onDragEnd={this.onDragEnd}>
       <div class="container">
         <div class="row">
             <div class="col">
@@ -110,6 +116,7 @@ class App extends React.Component {
             </div>
         </div>
     </div>
+    </DragDropContext>
     </div>
   }
 }
