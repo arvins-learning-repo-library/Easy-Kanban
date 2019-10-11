@@ -9,13 +9,16 @@ class App extends React.Component {
     tasks: [
       {
         text: "Brush your teeth", 
+        tab: 0,
       },
       {
         text: "Charge your phone", 
+        tab: 0,
       },
       {
         text: "Clean the dishes",
-      }
+        tab: 0,
+      },
     ]
   }
 
