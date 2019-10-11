@@ -55,9 +55,29 @@ class App extends React.Component {
     return <div>      
       <div>
         {this.state.tasks.map((task) => (
-            <Task text={task.text} />
+            <span style={{display: task.tab === 0 ? "block" : "none"}}><Task text={task.text} /></span>
         ))}
+      </div>
 
+      <div>
+        {this.state.tasks.map((task) => (
+            <span style={{display: task.tab === 1 ? "block" : "none"}}><Task text={task.text} /></span>
+        ))}
+      </div>
+
+      <div>
+        {this.state.tasks.map((task) => (
+            <span style={{display: task.tab === 2 ? "block" : "none"}}><Task text={task.text} /></span>
+        ))}
+      </div>
+
+      <div>
+        {this.state.tasks.map((task) => (
+            <span style={{display: task.tab === 3 ? "block" : "none"}}><Task text={task.text} /></span>
+        ))}
+      </div>
+
+      <div>
         <input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({entry: event.target.value})} />
         <button onClick={this.createTask}>Insert</button>
       </div>
