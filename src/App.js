@@ -9,6 +9,11 @@ class App extends React.Component {
       <Task text="Brush your teeth" />
       <Task text="Charge your phone" />
       <Task text="Clean the dishes" />
+
+      <div>
+        <input type="text" name="input_text" />
+        <button>Insert</button>
+      </div>
     </div>
   }
 }
