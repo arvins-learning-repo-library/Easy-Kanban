@@ -27,6 +27,25 @@ class App extends React.Component {
         text: "Clean the dishes",
         tab: 0,
       },
+
+      {
+        text: "Make a review of the Scrimba Course",
+        tab: 1,
+      },
+
+      {
+        text: "Learn React",
+        tab: 2,
+      },
+      {
+        text: "Become job ready",
+        tab: 2,
+      },
+
+      {
+        text: "Write a resume",
+        tab: 3,
+      }
     ]
   }
 
@@ -52,35 +71,48 @@ class App extends React.Component {
   }
 
   render() {
-    return <div>      
-      <div>
-        {this.state.tasks.map((task) => (
-            <span style={{display: task.tab === 0 ? "block" : "none"}}><Task text={task.text} /></span>
-        ))}
-      </div>
+    return <div>
+      <div class="container">
+        <div class="row">
+            <div class="col">
+              <h1>Backlog</h1>
+              {
+                this.state.tasks.map((task) => (
+                  <span style={{display: task.tab === 0 ? "block" : "none"}}><Task text={task.text} /></span>
+                ))
+              }
 
-      <div>
-        {this.state.tasks.map((task) => (
-            <span style={{display: task.tab === 1 ? "block" : "none"}}><Task text={task.text} /></span>
-        ))}
-      </div>
-
-      <div>
-        {this.state.tasks.map((task) => (
-            <span style={{display: task.tab === 2 ? "block" : "none"}}><Task text={task.text} /></span>
-        ))}
-      </div>
-
-      <div>
-        {this.state.tasks.map((task) => (
-            <span style={{display: task.tab === 3 ? "block" : "none"}}><Task text={task.text} /></span>
-        ))}
-      </div>
-
-      <div>
-        <input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({entry: event.target.value})} />
-        <button onClick={this.createTask}>Insert</button>
-      </div>
+            <div>
+              <input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({entry: event.target.value})} />
+              <button onClick={this.createTask}>Insert</button>
+            </div>
+            </div>
+            <div class="col">
+            <h1>TODO</h1>
+              {
+                this.state.tasks.map((task) => (
+                  <span style={{display: task.tab === 1 ? "block" : "none"}}><Task text={task.text} /></span>
+                ))
+              }
+            </div>
+            <div class="col">
+            <h1>In progress</h1>
+              {
+                this.state.tasks.map((task) => (
+                  <span style={{display: task.tab === 2 ? "block" : "none"}}><Task text={task.text} /></span>
+                ))
+              }
+            </div>
+            <div class="col">
+            <h1>Done!</h1>
+              {
+                this.state.tasks.map((task) => (
+                  <span style={{display: task.tab === 3 ? "block" : "none"}}><Task text={task.text} /></span>
+                ))
+              }
+            </div>
+        </div>
+    </div>
     </div>
   }
 }
