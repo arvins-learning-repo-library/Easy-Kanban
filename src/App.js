@@ -5,6 +5,14 @@ import Task from './Task'
 
 class App extends React.Component {
 
+
+  /* 
+  A tab of n means:
+  0 -> backlog
+  1 -> TODO
+  2 -> Doing
+  3 -> Done!
+  */
   state = {
     tasks: [
       {
