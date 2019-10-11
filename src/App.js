@@ -4,13 +4,18 @@ import './App.css';
 import Task from './Task'
 
 class App extends React.Component {
-  render() {
-    return <div>
-      <Task text="Brush your teeth" />
-      <Task text="Charge your phone" />
-      <Task text="Clean the dishes" />
 
+  state = {
+    tasks: ["Brush your teeth", "Charge your phone", "Clean the dishes"]
+  }
+
+  render() {
+    return <div>      
       <div>
+        {this.state.tasks.map((text) => (
+            <Task text={text} />
+        ))}
+
         <input type="text" name="input_text" />
         <button>Insert</button>
       </div>
