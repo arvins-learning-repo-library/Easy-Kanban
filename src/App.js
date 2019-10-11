@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Task from './Task'
 
 class App extends React.Component {
-
 
   /* 
   A tab of n means:
@@ -14,6 +13,7 @@ class App extends React.Component {
   3 -> Done!
   */
   state = {
+    entry: "",
     tasks: [
       {
         text: "Brush your teeth", 
@@ -30,6 +30,24 @@ class App extends React.Component {
     ]
   }
 
+  constructor() {
+    super()
+
+    this.createTask = this.createTask.bind(this)
+  }
+
+  createTask() {
+    console.log(this.state.entry)
+
+    this.setState(prevState => ({
+      tasks: [...prevState.tasks, {
+        text: this.state.entry,
+        tab: 0
+      }]
+    })
+    )
+  }
+
   render() {
     return <div>      
       <div>
@@ -37,8 +55,8 @@ class App extends React.Component {
             <Task text={task.text} />
         ))}
 
-        <input type="text" name="input_text" />
-        <button>Insert</button>
+        <input type="text" name="input_text" onChange={event => this.setState({entry: event.target.value})} />
+        <button onClick={this.createTask}>Insert</button>
       </div>
     </div>
   }
