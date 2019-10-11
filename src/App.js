@@ -59,12 +59,15 @@ class App extends React.Component {
   createTask() {
     console.log(this.state.entry)
 
-    this.setState(prevState => ({
-      tasks: [...prevState.tasks, {
-        text: this.state.entry,
-        tab: 0
-      }]
-    }))
+    if (this.state.entry.trim() != "") {
+
+      this.setState(prevState => ({
+        tasks: [...prevState.tasks, {
+          text: this.state.entry.trim(),
+          tab: 0
+        }]
+      }))
+    }
 
     this.setState(prevState => ({
       entry: ""
