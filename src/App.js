@@ -6,14 +6,24 @@ import Task from './Task'
 class App extends React.Component {
 
   state = {
-    tasks: ["Brush your teeth", "Charge your phone", "Clean the dishes"]
+    tasks: [
+      {
+        text: "Brush your teeth", 
+      },
+      {
+        text: "Charge your phone", 
+      },
+      {
+        text: "Clean the dishes",
+      }
+    ]
   }
 
   render() {
     return <div>      
       <div>
-        {this.state.tasks.map((text) => (
-            <Task text={text} />
+        {this.state.tasks.map((task) => (
+            <Task text={task.text} />
         ))}
 
         <input type="text" name="input_text" />
