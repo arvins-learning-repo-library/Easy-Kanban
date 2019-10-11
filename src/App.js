@@ -44,8 +44,11 @@ class App extends React.Component {
         text: this.state.entry,
         tab: 0
       }]
-    })
-    )
+    }))
+
+    this.setState(prevState => ({
+      entry: ""
+    }))
   }
 
   render() {
@@ -55,7 +58,7 @@ class App extends React.Component {
             <Task text={task.text} />
         ))}
 
-        <input type="text" name="input_text" onChange={event => this.setState({entry: event.target.value})} />
+        <input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({entry: event.target.value})} />
         <button onClick={this.createTask}>Insert</button>
       </div>
     </div>
