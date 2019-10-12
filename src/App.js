@@ -75,50 +75,62 @@ class App extends React.Component {
 		}))
 	}
 
-	renderColumn(col) {
+	renderColumn(col, idx) {
 		return <div>
 			{
-				this.state.tasks.map((task) => (
-					<span style={{ display: task.tab === col ? "block" : "none" }}><Task text={task.text} /></span>
+				this.state.tasks.map((task, idx) => (
+					<span style={{ display: task.tab === col ? "block" : "none" }}><Task text={task.text} index={idx} /></span>
 				))
 			}
 		</div>
 	}
 
+	onDragEnd = result => {
+
+	}
+
 	render() {
 		return <div>
-			<DragDropContext>
-				<Droppable>
-					<div class="container">
-						<div class="row">
-							<div class="col">
-								<h1>Backlog</h1>
+			<DragDropContext onDragEnd={this.onDragEnd}>
+				<div class="container">
+					<div class="row">
+						<Droppable droppableId="backlog">
+							{provided => (
+								<div class="col" ref={provided.ref} {...provided.droppableProps}>
+									<h1>Backlog</h1>
 
-								{this.renderColumn(0)}
+									{
+										this.state.tasks.map((task, index) => (
+											<span style={{ display: task.tab === 0 ? "block" : "none" }}><Task text={task.text} index={index} /></span>
+										))
+									}
 
-								<div>
-									<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
-									<button onClick={this.createTask}>Insert</button>
+									{provided.placeholder}
+
+									<div>
+										<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
+										<button onClick={this.createTask}>Insert</button>
+									</div>
 								</div>
-							</div>
-							<div class="col">
-								<h1>TODO</h1>
+							)}
+						</Droppable>
+						<div class="col">
+							<h1>TODO</h1>
 
-								{this.renderColumn(1)}
-							</div>
-							<div class="col">
-								<h1>In progress</h1>
+							{this.renderColumn(1)}
+						</div>
+						<div class="col">
+							<h1>In progress</h1>
 
-								{this.renderColumn(2)}
-							</div>
-							<div class="col">
-								<h1>Done!</h1>
-								
-								{this.renderColumn(3)}
-							</div>
+							{this.renderColumn(2)}
+						</div>
+						<div class="col">
+							<h1>Done!</h1>
+
+							{this.renderColumn(3)}
 						</div>
 					</div>
-				</Droppable>
+				</div>
 			</DragDropContext>
 		</div>
 	}
