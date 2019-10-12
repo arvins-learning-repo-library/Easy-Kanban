@@ -3,11 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import Task from './Task';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import TestData from './TestData';
 
-const BACKLOG = 0;
-const TODO = 1;
-const DOING = 2;
-const DONE = 3;
 
 function getRandomId() {
 	let min = Math.ceil(1);
@@ -19,45 +16,7 @@ class App extends React.Component {
 
 	state = {
 		entry: "",
-		tasks: [
-			// Test data!
-			{
-				id: getRandomId(),
-				text: "Brush your teeth",
-				tab: BACKLOG,
-			},
-			{
-				id: getRandomId(),
-				text: "Charge your phone",
-				tab: BACKLOG,
-			},
-			{
-				id: getRandomId(),
-				text: "Clean the dishes",
-				tab: BACKLOG,
-			},
-			{
-				id: getRandomId(),
-				text: "Make a review of the Scrimba Course",
-				tab: TODO,
-			},
-			{
-				id: getRandomId(),
-				text: "Learn React",
-				tab: DOING,
-			},
-			{
-				id: getRandomId(),
-				text: "Become job ready",
-				tab: DOING,
-			},
-
-			{
-				id: getRandomId(),
-				text: "Write a resume",
-				tab: DONE,
-			}
-		]
+		data: TestData
 	}
 
 	constructor() {
@@ -75,7 +34,6 @@ class App extends React.Component {
 				tasks: [...prevState.tasks, {
 					id: getRandomId(),
 					text: this.state.entry.trim(),
-					tab: BACKLOG
 				}]
 			}))
 		}
@@ -86,33 +44,7 @@ class App extends React.Component {
 	}
 
 	onDragEnd = result => {
-		const { destination, source, draggableId } = result;
-
-		if (!destination) {
-			return; // No destination
-		}
-
-		if (destination.droppableId === source.droppableId && destination.index === source.index) {
-			return; // Back in starting pos
-		}
-
-		// Complex case: actually re-ordering
-		const column = this.state.tasks[source.droppableId] // Since we have 1 col this will always be "col1"
-		const order = Array.from(this.state.tasks)
-		order.splice(source.index, 1)
-		order.splice(destination.index, 0, draggableId)
-
-		const newState = {
-			...this.state,
-			columns: {
-				...this.state.columns, // Will be needed if more than 1 column
-				tasks: order
-			}
-		}
-
-		console.log(newState)
-
-		this.setState(newState) // Here is where you would let the server know of a re-order.
+		// TODO.
 	}
 
 	render() {
