@@ -10,9 +10,9 @@ const DOING = 2;
 const DONE = 3;
 
 function getRandomId() {
-    let min = Math.ceil(1);
-    let max = Math.floor(Number.MAX_SAFE_INTEGER);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+	let min = Math.ceil(1);
+	let max = Math.floor(Number.MAX_SAFE_INTEGER);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 class App extends React.Component {
@@ -86,7 +86,33 @@ class App extends React.Component {
 	}
 
 	onDragEnd = result => {
-		
+		const { destination, source, draggableId } = result;
+
+		if (!destination) {
+			return; // No destination
+		}
+
+		if (destination.droppableId === source.droppableId && destination.index === source.index) {
+			return; // Back in starting pos
+		}
+
+		// Complex case: actually re-ordering
+		const column = this.state.tasks[source.droppableId] // Since we have 1 col this will always be "col1"
+		const order = Array.from(this.state.tasks)
+		order.splice(source.index, 1)
+		order.splice(destination.index, 0, draggableId)
+
+		const newState = {
+			...this.state,
+			columns: {
+				...this.state.columns, // Will be needed if more than 1 column
+				tasks: order
+			}
+		}
+
+		console.log(newState)
+
+		this.setState(newState) // Here is where you would let the server know of a re-order.
 	}
 
 	render() {
