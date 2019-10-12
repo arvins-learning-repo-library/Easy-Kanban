@@ -4,6 +4,11 @@ import './App.css';
 import Task from './Task';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
+const BACKLOG = 0;
+const TODO = 1;
+const DOING = 2;
+const DONE = 3;
+
 class App extends React.Component {
 
 	/* 
@@ -18,34 +23,34 @@ class App extends React.Component {
 		tasks: [
 			{
 				text: "Brush your teeth",
-				tab: 0,
+				tab: BACKLOG,
 			},
 			{
 				text: "Charge your phone",
-				tab: 0,
+				tab: BACKLOG,
 			},
 			{
 				text: "Clean the dishes",
-				tab: 0,
+				tab: BACKLOG,
 			},
 
 			{
 				text: "Make a review of the Scrimba Course",
-				tab: 1,
+				tab: TODO,
 			},
 
 			{
 				text: "Learn React",
-				tab: 2,
+				tab: DOING,
 			},
 			{
 				text: "Become job ready",
-				tab: 2,
+				tab: DOING,
 			},
 
 			{
 				text: "Write a resume",
-				tab: 3,
+				tab: DONE,
 			}
 		]
 	}
@@ -64,7 +69,7 @@ class App extends React.Component {
 			this.setState(prevState => ({
 				tasks: [...prevState.tasks, {
 					text: this.state.entry.trim(),
-					tab: 0
+					tab: BACKLOG
 				}]
 			}))
 		}
@@ -83,12 +88,14 @@ class App extends React.Component {
 			<DragDropContext onDragEnd={this.onDragEnd}>
 				<div class="container">
 					<div class="row">
-						<Droppable droppableId="backlog">
+						<Droppable droppableId="backlogDroppable">
 							{(provided) => (
 								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
-									<h1>Backlog</h1>
+									<h1>💭 Backlog</h1>
 
-									{this.state.tasks.map((task, index) => <Task text={task.text} index={index} />)}
+									{this.state.tasks.map((task, index) => (
+										<span style={{ display: task.tab === BACKLOG ? "block" : "none" }}><Task text={task.text} index={index} /></span>
+									))}
 
 									{provided.placeholder}
 
@@ -99,15 +106,45 @@ class App extends React.Component {
 								</div>
 							)}
 						</Droppable>
-						<div class="col">
-							<h1>TODO</h1>
-						</div>
-						<div class="col">
-							<h1>In progress</h1>
-						</div>
-						<div class="col">
-							<h1>Done!</h1>
-						</div>
+						<Droppable droppableId="todoDroppable">
+							{(provided) => (
+								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
+									<h1>👨‍🏭 TODO</h1>
+
+									{this.state.tasks.map((task, index) => (
+										<span style={{ display: task.tab === TODO ? "block" : "none" }}><Task text={task.text} index={index} /></span>
+									))}
+
+									{provided.placeholder}
+								</div>
+							)}
+						</Droppable>
+						<Droppable droppableId="doingDroppable">
+							{(provided) => (
+								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
+									<h1>💪 Crushing</h1>
+
+									{this.state.tasks.map((task, index) => (
+										<span style={{ display: task.tab === DOING ? "block" : "none" }}><Task text={task.text} index={index} /></span>
+									))}
+
+									{provided.placeholder}
+								</div>
+							)}
+						</Droppable>
+						<Droppable droppableId="doneDroppable">
+							{(provided) => (
+								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
+									<h1>🙌 Crushed</h1>
+
+									{this.state.tasks.map((task, index) => (
+										<span style={{ display: task.tab === DONE ? "block" : "none" }}><Task text={task.text} index={index} /></span>
+									))}
+
+									{provided.placeholder}
+								</div>
+							)}
+						</Droppable>
 					</div>
 				</div>
 			</DragDropContext>
