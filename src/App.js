@@ -85,9 +85,9 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<DragDropContext onDragEnd={this.onDragEnd}>
-				<div class="container">
-					<div class="row">
+			<div class="container">
+				<div class="row">
+					<DragDropContext onDragEnd={this.onDragEnd}>
 						<Droppable droppableId="backlogDroppable">
 							{(provided) => (
 								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
@@ -145,9 +145,9 @@ class App extends React.Component {
 								</div>
 							)}
 						</Droppable>
-					</div>
+					</DragDropContext>
 				</div>
-			</DragDropContext>
+			</div >
 		)
 	}
 }
