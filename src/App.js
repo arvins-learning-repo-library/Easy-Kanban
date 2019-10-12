@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Task from './Task'
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import Task from './Task';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 class App extends React.Component {
 
@@ -54,7 +54,6 @@ class App extends React.Component {
 		super()
 
 		this.createTask = this.createTask.bind(this)
-		this.renderColumn = this.renderColumn.bind(this)
 	}
 
 	createTask() {
@@ -75,35 +74,21 @@ class App extends React.Component {
 		}))
 	}
 
-	renderColumn(col, idx) {
-		return <div>
-			{
-				this.state.tasks.map((task, idx) => (
-					<span style={{ display: task.tab === col ? "block" : "none" }}><Task text={task.text} index={idx} /></span>
-				))
-			}
-		</div>
-	}
-
 	onDragEnd = result => {
 
 	}
 
 	render() {
-		return <div>
+		return (
 			<DragDropContext onDragEnd={this.onDragEnd}>
 				<div class="container">
 					<div class="row">
 						<Droppable droppableId="backlog">
-							{provided => (
-								<div class="col" ref={provided.ref} {...provided.droppableProps}>
+							{(provided) => (
+								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
 									<h1>Backlog</h1>
 
-									{
-										this.state.tasks.map((task, index) => (
-											<span style={{ display: task.tab === 0 ? "block" : "none" }}><Task text={task.text} index={index} /></span>
-										))
-									}
+									{this.state.tasks.map((task, index) => <Task text={task.text} index={index} />)}
 
 									{provided.placeholder}
 
@@ -116,23 +101,17 @@ class App extends React.Component {
 						</Droppable>
 						<div class="col">
 							<h1>TODO</h1>
-
-							{this.renderColumn(1)}
 						</div>
 						<div class="col">
 							<h1>In progress</h1>
-
-							{this.renderColumn(2)}
 						</div>
 						<div class="col">
 							<h1>Done!</h1>
-
-							{this.renderColumn(3)}
 						</div>
 					</div>
 				</div>
 			</DragDropContext>
-		</div>
+		)
 	}
 }
 
