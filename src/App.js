@@ -9,46 +9,51 @@ const TODO = 1;
 const DOING = 2;
 const DONE = 3;
 
+function getRandomId() {
+    let min = Math.ceil(1);
+    let max = Math.floor(Number.MAX_SAFE_INTEGER);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 class App extends React.Component {
 
-	/* 
-	A tab of n means:
-	0 -> backlog
-	1 -> TODO
-	2 -> Doing
-	3 -> Done!
-	*/
 	state = {
 		entry: "",
 		tasks: [
+			// Test data!
 			{
+				id: getRandomId(),
 				text: "Brush your teeth",
 				tab: BACKLOG,
 			},
 			{
+				id: getRandomId(),
 				text: "Charge your phone",
 				tab: BACKLOG,
 			},
 			{
+				id: getRandomId(),
 				text: "Clean the dishes",
 				tab: BACKLOG,
 			},
-
 			{
+				id: getRandomId(),
 				text: "Make a review of the Scrimba Course",
 				tab: TODO,
 			},
-
 			{
+				id: getRandomId(),
 				text: "Learn React",
 				tab: DOING,
 			},
 			{
+				id: getRandomId(),
 				text: "Become job ready",
 				tab: DOING,
 			},
 
 			{
+				id: getRandomId(),
 				text: "Write a resume",
 				tab: DONE,
 			}
@@ -68,6 +73,7 @@ class App extends React.Component {
 
 			this.setState(prevState => ({
 				tasks: [...prevState.tasks, {
+					id: getRandomId(),
 					text: this.state.entry.trim(),
 					tab: BACKLOG
 				}]
@@ -94,7 +100,7 @@ class App extends React.Component {
 									<h1>💭 Backlog</h1>
 
 									{this.state.tasks.map((task, index) => (
-										<span style={{ display: task.tab === BACKLOG ? "block" : "none" }}><Task text={task.text} index={index} /></span>
+										<span style={{ display: task.tab === BACKLOG ? "block" : "none" }}><Task task={task} index={index} /></span>
 									))}
 
 									{provided.placeholder}
@@ -112,7 +118,7 @@ class App extends React.Component {
 									<h1>👨‍🏭 TODO</h1>
 
 									{this.state.tasks.map((task, index) => (
-										<span style={{ display: task.tab === TODO ? "block" : "none" }}><Task text={task.text} index={index} /></span>
+										<span style={{ display: task.tab === TODO ? "block" : "none" }}><Task task={task} index={index} /></span>
 									))}
 
 									{provided.placeholder}
@@ -125,7 +131,7 @@ class App extends React.Component {
 									<h1>💪 Crushing</h1>
 
 									{this.state.tasks.map((task, index) => (
-										<span style={{ display: task.tab === DOING ? "block" : "none" }}><Task text={task.text} index={index} /></span>
+										<span style={{ display: task.tab === DOING ? "block" : "none" }}><Task task={task} index={index} /></span>
 									))}
 
 									{provided.placeholder}
@@ -138,7 +144,7 @@ class App extends React.Component {
 									<h1>🙌 Crushed</h1>
 
 									{this.state.tasks.map((task, index) => (
-										<span style={{ display: task.tab === DONE ? "block" : "none" }}><Task text={task.text} index={index} /></span>
+										<span style={{ display: task.tab === DONE ? "block" : "none" }}><Task task={task} index={index} /></span>
 									))}
 
 									{provided.placeholder}
