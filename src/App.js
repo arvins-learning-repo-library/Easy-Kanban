@@ -10,24 +10,24 @@ class App extends React.Component {
 		entry: "",
 		tasks: [
 			[
-				{ text: "Create a news app" },
-				{ text: "Learn Adobe XD" },
+				{ id: 1, text: "Create a news app" },
+				{ id: 2, text: "Learn Adobe XD" },
 			],
 
 			[
-				{ text: "Record a Youtube video" },
-				{ text: "Edit a video" },
-				{ text: "Upload a video" },
+				{ id: 3, text: "Record a Youtube video" },
+				{ id: 4, text: "Edit a video" },
+				{ id: 5, text: "Upload a video" },
 			],
 
 			[
-				{ text: "Kanban app UI" },
-				{ text: "Kanban app logic" },
+				{ id: 6, text: "Kanban app UI" },
+				{ id: 7, text: "Kanban app logic" },
 			],
 
 			[
-				{ text: "Finish scrimba.com course" },
-				{ text: "Re-price your apps" },
+				{ id: 8, text: "Finish scrimba.com course" },
+				{ id: 9, text: "Re-price your apps" },
 			],
 		]
 	}
@@ -54,6 +54,7 @@ class App extends React.Component {
 
 	onDragEnd = result => {
 		// Dragging logic
+		console.log(result)
 	}
 
 	render() {
@@ -72,7 +73,7 @@ class App extends React.Component {
 									<h1>Backlog</h1>
 
 									{this.state.tasks[0].map((item, index) => (
-										<Task text={item.text} index={index}/>
+										<Task id={item.id} text={item.text} index={index}/>
 									))}
 
 									{provided.placeholder}
@@ -86,7 +87,7 @@ class App extends React.Component {
 									<h1>TODO</h1>
 
 									{this.state.tasks[1].map((item, index) => (
-										<Task text={item.text} index={index}/>
+										<Task id={item.id} text={item.text} index={index}/>
 									))}
 
 									{provided.placeholder}
@@ -100,7 +101,7 @@ class App extends React.Component {
 									<h1>In Progress</h1>
 
 									{this.state.tasks[2].map((item, index) => (
-										<Task text={item.text} index={index}/>
+										<Task id={item.id} text={item.text} index={index}/>
 									))}
 
 									{provided.placeholder}
@@ -114,7 +115,7 @@ class App extends React.Component {
 									<h1>Done!</h1>
 
 									{this.state.tasks[3].map((item, index) => (
-										<Task text={item.text} index={index}/>
+										<Task id={item.id} text={item.text} index={index}/>
 									))}
 
 									{provided.placeholder}
