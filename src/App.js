@@ -79,6 +79,7 @@ class App extends React.Component {
 
 		// Simple case: Dragged to somewhere that doesn't make sense.
 		if (!result.destination) {
+			console.log()
 			return;
 		}
 
@@ -86,34 +87,39 @@ class App extends React.Component {
 		if (result.destination === result.source && result.destination.index === result.source.index) {
 			return;
 		}
+		
+		// Make a copy of tasks. Remember that state is READ ONLY in React.
+		let localTasks = this.state.tasks.slice(0)
 
 		// Get dragged item
-		let allTasks = this.state.tasks.flat() // Combine subarrays, depth of 1
+		let allTasks = localTasks.flat() // Combine subarrays, depth of 1
 		let draggedItem = allTasks.find(x => x.id === result.draggableId)	
-		
-		console.log(draggedItem)
+		console.log("Dragged: ", draggedItem)
 
-		// Works for dragging within the same column
-		if (result.destination.droppableId === "backlog") {
-			console.log("adding to backlog")
+		/*
+		Algorithm: 
+		1. Copy the dragged item and change its id
+		2. Insert the dragged item to its new place
+		2. Delete the original item from its  column
+		*/
+		let newCol
+		if (result.destination.droppableId == "backlog") newCol = 0 // TODO constants
+		if (result.destination.droppableId == "todo") newCol = 1
+		if (result.destination.droppableId == "doing") newCol = 2
+		if (result.destination.droppableId == "done") newCol = 3
 
-			let col = this.state.tasks[0].slice(0)
-			let inserting = cloneDeep(draggedItem)
-			inserting.id = getRandomId()
+		let duplicated = cloneDeep(draggedItem)
 
-			// insert and remove
-			col.push(inserting)
-			pull(col, draggedItem)
+		localTasks[newCol].splice(result.destination.index, 0, duplicated)
+		localTasks[0] = pull(localTasks[0], draggedItem) // TODO clean
+		localTasks[1] = pull(localTasks[1], draggedItem)
+		localTasks[2] = pull(localTasks[2], draggedItem)
+		localTasks[3] = pull(localTasks[3], draggedItem)
 
-			this.setState(prevState => ({
-				tasks: [
-					col,
-					prevState.tasks[1],
-					prevState.tasks[2],
-					prevState.tasks[3]
-				]
-			}))
-		}
+		console.log(localTasks)
+
+		// Update the state.
+		this.setState({tasks: localTasks})
 	}
 
 	render() {
