@@ -100,24 +100,25 @@ class App extends React.Component {
 		/*
 		Algorithm: 
 		1. Copy the dragged item and change its id
-		2. Insert the dragged item to its new place
 		2. Delete the original item from its  column
+		3. Insert the dragged item to its new place (ALWAYS DO 3 AFTER 2.)
 		*/
 		let newCol
-		if (result.destination.droppableId == "backlog") newCol = 0 // TODO constants
-		if (result.destination.droppableId == "todo") newCol = 1
-		if (result.destination.droppableId == "doing") newCol = 2
-		if (result.destination.droppableId == "done") newCol = 3
+		if (result.destination.droppableId === "backlog") newCol = 0 // TODO constants
+		if (result.destination.droppableId === "todo") newCol = 1
+		if (result.destination.droppableId === "doing") newCol = 2
+		if (result.destination.droppableId === "done") newCol = 3
 
 		let duplicated = cloneDeep(draggedItem)
 		duplicated.id = getRandomId()
 		console.log("Duplicated: ", duplicated)
 
-		localTasks[newCol].splice(result.destination.index, 0, duplicated)
 		localTasks[0] = pull(localTasks[0], draggedItem) // TODO clean
 		localTasks[1] = pull(localTasks[1], draggedItem)
 		localTasks[2] = pull(localTasks[2], draggedItem)
 		localTasks[3] = pull(localTasks[3], draggedItem)
+
+		localTasks[newCol].splice(result.destination.index, 0, duplicated)
 
 		console.log("Updating state to: ", localTasks)
 
