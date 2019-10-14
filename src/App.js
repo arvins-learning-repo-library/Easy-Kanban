@@ -79,12 +79,13 @@ class App extends React.Component {
 
 		// Simple case: Dragged to somewhere that doesn't make sense.
 		if (!result.destination) {
-			console.log()
+			console.log("Simple case: dragged to somewhere that does not make sense.")
 			return;
 		}
 
 		// Simple case: Dragged to the exact same pos.
 		if (result.destination === result.source && result.destination.index === result.source.index) {
+			console.log("Simple case: dragged to the exact same place.")
 			return;
 		}
 		
@@ -109,6 +110,8 @@ class App extends React.Component {
 		if (result.destination.droppableId == "done") newCol = 3
 
 		let duplicated = cloneDeep(draggedItem)
+		duplicated.id = getRandomId()
+		console.log("Duplicated: ", duplicated)
 
 		localTasks[newCol].splice(result.destination.index, 0, duplicated)
 		localTasks[0] = pull(localTasks[0], draggedItem) // TODO clean
@@ -116,7 +119,7 @@ class App extends React.Component {
 		localTasks[2] = pull(localTasks[2], draggedItem)
 		localTasks[3] = pull(localTasks[3], draggedItem)
 
-		console.log(localTasks)
+		console.log("Updating state to: ", localTasks)
 
 		// Update the state.
 		this.setState({tasks: localTasks})
