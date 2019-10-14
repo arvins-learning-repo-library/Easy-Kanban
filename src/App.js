@@ -11,7 +11,6 @@ function getRandomId() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
 class App extends React.Component {
 
 	state = {
@@ -77,6 +76,16 @@ class App extends React.Component {
 	// Dragging logic
 	onDragEnd = result => {
 		console.log(result)
+
+		// Simple case: Dragged to somewhere that doesn't make sense.
+		if (!result.destination) {
+			return;
+		}
+
+		// Simple case: Dragged to the exact same pos.
+		if (result.destination === result.source && result.destination.index === result.source.index) {
+			return;
+		}
 
 		// Get dragged item
 		let allTasks = this.state.tasks.flat() // Combine subarrays, depth of 1
