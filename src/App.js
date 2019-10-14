@@ -3,12 +3,21 @@ import logo from './logo.svg';
 import './App.css';
 import Task from './Task';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { cloneDeep, pull } from "lodash"
+
+function getRandomId() {
+    let min = Math.ceil(100); // Set to 100 so you can add up 100 examples
+    let max = Math.floor(Number.MAX_SAFE_INTEGER);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
 class App extends React.Component {
 
 	state = {
 		entry: "",
 		tasks: [
+			// Task IDs must be unique. Use getRandomId for that.
 			[
 				{ id: 1, text: "Create a news app" },
 				{ id: 2, text: "Learn Adobe XD" },
@@ -39,11 +48,24 @@ class App extends React.Component {
 	}
 
 	createTask() {
-		console.log(this.state.entry)
+		let input = this.state.entry.trim()
 
 		// Insert to backlog
-		if (this.state.entry.trim() !== "") {
-			// TODO
+		if (input !== "") {
+			let col = this.state.tasks[0].slice(0)
+			col.push({
+				id: getRandomId(),
+				text: input,
+			})
+
+			this.setState(prevState => ({
+				tasks: [
+					col,
+					prevState.tasks[1],
+					prevState.tasks[2],
+					prevState.tasks[3],
+				]
+			}))
 		}
 
 		// Clear
@@ -52,9 +74,37 @@ class App extends React.Component {
 		}))
 	}
 
+	// Dragging logic
 	onDragEnd = result => {
-		// Dragging logic
 		console.log(result)
+
+		// Get dragged item
+		let allTasks = this.state.tasks.flat() // Combine subarrays, depth of 1
+		let draggedItem = allTasks.find(x => x.id === result.draggableId)	
+		
+		console.log(draggedItem)
+
+		// Works for dragging within the same column
+		if (result.destination.droppableId === "backlog") {
+			console.log("adding to backlog")
+
+			let col = this.state.tasks[0].slice(0)
+			let inserting = cloneDeep(draggedItem)
+			inserting.id = getRandomId()
+
+			// insert and remove
+			col.push(inserting)
+			pull(col, draggedItem)
+
+			this.setState(prevState => ({
+				tasks: [
+					col,
+					prevState.tasks[1],
+					prevState.tasks[2],
+					prevState.tasks[3]
+				]
+			}))
+		}
 	}
 
 	render() {
