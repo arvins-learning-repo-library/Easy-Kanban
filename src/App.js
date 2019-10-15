@@ -83,7 +83,9 @@ class App extends React.Component {
 		}
 	}
 
-	createTask() {
+	createTask = event =>  {
+		event.preventDefault() // Prevent a page reload on pressing enter.
+
 		let input = this.state.entry.trim()
 
 		// Insert to backlog
@@ -193,8 +195,10 @@ class App extends React.Component {
 								<div class="col card" ref={provided.innerRef} {...provided.droppableProps}>
 									<h4>Controls</h4>
 
-									<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
-									<button onClick={this.createTask}>Insert</button>
+									<form onSubmit={this.createTask}>
+										<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
+										<button type="submit">Insert</button>
+									</form>
 									<br />
 									<span class="card">🚮 Drag here to delete.</span>
 									<br />
