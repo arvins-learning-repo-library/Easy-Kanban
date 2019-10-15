@@ -48,7 +48,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		let localTasks = localStorage.getItem('page1_tasks')
-		
+
 		if (localTasks) {
 			console.log('Loading tasks: ', localTasks)
 
@@ -121,8 +121,14 @@ class App extends React.Component {
 		let draggedItem = allTasks.find(x => x.id === result.draggableId)
 		console.log("Dragged: ", draggedItem)
 
+		// If dragged to delete, pass it to deleteTask
+		if (result.destination.droppableId === "delete") {
+			this.deleteTask(draggedItem)
+			return;
+		}
+
 		/*
-		Algorithm: 
+		Moving Algorithm: 
 		1. Copy the dragged item and change its id
 		2. Delete the original item from its  column
 		3. Insert the dragged item to its new place (ALWAYS DO 3 AFTER 2.)
@@ -150,11 +156,28 @@ class App extends React.Component {
 		this.setState({ tasks: copiedTasks })
 	}
 
+	deleteTask(clickedTask) {
+		console.log("Deleting: ", clickedTask)
+	}
+
 	render() {
 		return (
 			<div class="container">
 				<div class="row">
 					<DragDropContext onDragEnd={this.onDragEnd}>
+						<Droppable droppableId="delete">
+							{(provided) => (
+								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
+									<h1>Controls</h1>
+
+									<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
+									<button onClick={this.createTask}>Insert</button>
+
+									<h5>🚮 Drag here to delete</h5>
+								</div>
+							)}
+						</Droppable>
+
 						<Droppable droppableId="backlog">
 							{(provided) => (
 								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
@@ -165,9 +188,6 @@ class App extends React.Component {
 									))}
 
 									{provided.placeholder}
-
-									<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
-									<button onClick={this.createTask}>Insert</button>
 								</div>
 							)}
 						</Droppable>
@@ -175,7 +195,7 @@ class App extends React.Component {
 						<Droppable droppableId="todo">
 							{(provided) => (
 								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
-									<h1>TODO</h1>
+									<h1>Ready</h1>
 
 									{this.state.tasks[1].map((item, index) => (
 										<Task id={item.id} text={item.text} index={index} />
