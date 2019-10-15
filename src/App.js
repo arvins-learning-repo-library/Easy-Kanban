@@ -123,7 +123,7 @@ class App extends React.Component {
 
 		// If dragged to delete, pass it to deleteTask
 		if (result.destination.droppableId === "delete") {
-			this.deleteTask(draggedItem)
+			this.deleteTaskAfterDragging(draggedItem)
 			return;
 		}
 
@@ -156,8 +156,18 @@ class App extends React.Component {
 		this.setState({ tasks: copiedTasks })
 	}
 
-	deleteTask(clickedTask) {
+	deleteTaskAfterDragging(clickedTask) {
 		console.log("Deleting: ", clickedTask)
+
+		let copiedTasks = this.state.tasks.slice(0)
+
+		copiedTasks[0] = pull(copiedTasks[0], clickedTask) // TODO clean
+		copiedTasks[1] = pull(copiedTasks[1], clickedTask)
+		copiedTasks[2] = pull(copiedTasks[2], clickedTask)
+		copiedTasks[3] = pull(copiedTasks[3], clickedTask)
+
+		// Update the state.
+		this.setState({ tasks: copiedTasks })
 	}
 
 	render() {
