@@ -6,9 +6,9 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { cloneDeep, pull } from "lodash"
 
 function getRandomId() {
-    let min = Math.ceil(100); // Set to 100 so you can add up 100 examples
-    let max = Math.floor(Number.MAX_SAFE_INTEGER);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+	let min = Math.ceil(100); // Set to 100 so you can add up 100 examples
+	let max = Math.floor(Number.MAX_SAFE_INTEGER);
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 class App extends React.Component {
@@ -44,6 +44,30 @@ class App extends React.Component {
 		super()
 
 		this.createTask = this.createTask.bind(this)
+	}
+
+	componentDidMount() {
+		let localTasks = localStorage.getItem('page1_tasks')
+		
+		if (localTasks) {
+			console.log('Loading tasks: ', localTasks)
+
+			this.setState({
+				tasks: JSON.parse(localTasks)
+			})
+		}
+
+		console.log("Tasks not loaded, setting default state...")
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		console.log("State tasks updated...")
+
+		// TODO saving doesn't happen immediately. Sometimes you need a moment. Have an indicator icon.
+		if (this.state.tasks !== prevState.tasks) {
+			localStorage.setItem('page1_tasks', JSON.stringify(this.state.tasks))
+			console.log('Tasks saved!')
+		}
 	}
 
 	createTask() {
@@ -88,13 +112,13 @@ class App extends React.Component {
 			console.log("Simple case: dragged to the exact same place.")
 			return;
 		}
-		
+
 		// Make a copy of tasks. Remember that state is READ ONLY in React.
-		let localTasks = this.state.tasks.slice(0)
+		let copiedTasks = this.state.tasks.slice(0)
 
 		// Get dragged item
-		let allTasks = localTasks.flat() // Combine subarrays, depth of 1
-		let draggedItem = allTasks.find(x => x.id === result.draggableId)	
+		let allTasks = copiedTasks.flat() // Combine subarrays, depth of 1
+		let draggedItem = allTasks.find(x => x.id === result.draggableId)
 		console.log("Dragged: ", draggedItem)
 
 		/*
@@ -113,17 +137,17 @@ class App extends React.Component {
 		duplicated.id = getRandomId()
 		console.log("Duplicated: ", duplicated)
 
-		localTasks[0] = pull(localTasks[0], draggedItem) // TODO clean
-		localTasks[1] = pull(localTasks[1], draggedItem)
-		localTasks[2] = pull(localTasks[2], draggedItem)
-		localTasks[3] = pull(localTasks[3], draggedItem)
+		copiedTasks[0] = pull(copiedTasks[0], draggedItem) // TODO clean
+		copiedTasks[1] = pull(copiedTasks[1], draggedItem)
+		copiedTasks[2] = pull(copiedTasks[2], draggedItem)
+		copiedTasks[3] = pull(copiedTasks[3], draggedItem)
 
-		localTasks[newCol].splice(result.destination.index, 0, duplicated)
+		copiedTasks[newCol].splice(result.destination.index, 0, duplicated)
 
-		console.log("Updating state to: ", localTasks)
+		console.log("Updating state to: ", copiedTasks)
 
 		// Update the state.
-		this.setState({tasks: localTasks})
+		this.setState({ tasks: copiedTasks })
 	}
 
 	render() {
@@ -131,7 +155,7 @@ class App extends React.Component {
 			<div class="container">
 				<div class="row">
 					<div class="col">
-						<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({entry: event.target.value})} />
+						<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
 						<button onClick={this.createTask}>Insert</button>
 					</div>
 
@@ -142,7 +166,7 @@ class App extends React.Component {
 									<h1>Backlog</h1>
 
 									{this.state.tasks[0].map((item, index) => (
-										<Task id={item.id} text={item.text} index={index}/>
+										<Task id={item.id} text={item.text} index={index} />
 									))}
 
 									{provided.placeholder}
@@ -156,7 +180,7 @@ class App extends React.Component {
 									<h1>TODO</h1>
 
 									{this.state.tasks[1].map((item, index) => (
-										<Task id={item.id} text={item.text} index={index}/>
+										<Task id={item.id} text={item.text} index={index} />
 									))}
 
 									{provided.placeholder}
@@ -170,7 +194,7 @@ class App extends React.Component {
 									<h1>In Progress</h1>
 
 									{this.state.tasks[2].map((item, index) => (
-										<Task id={item.id} text={item.text} index={index}/>
+										<Task id={item.id} text={item.text} index={index} />
 									))}
 
 									{provided.placeholder}
@@ -184,7 +208,7 @@ class App extends React.Component {
 									<h1>Done!</h1>
 
 									{this.state.tasks[3].map((item, index) => (
-										<Task id={item.id} text={item.text} index={index}/>
+										<Task id={item.id} text={item.text} index={index} />
 									))}
 
 									{provided.placeholder}
