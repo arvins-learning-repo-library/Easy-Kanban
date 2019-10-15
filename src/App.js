@@ -154,11 +154,6 @@ class App extends React.Component {
 		return (
 			<div class="container">
 				<div class="row">
-					<div class="col">
-						<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
-						<button onClick={this.createTask}>Insert</button>
-					</div>
-
 					<DragDropContext onDragEnd={this.onDragEnd}>
 						<Droppable droppableId="backlog">
 							{(provided) => (
@@ -170,6 +165,9 @@ class App extends React.Component {
 									))}
 
 									{provided.placeholder}
+
+									<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
+									<button onClick={this.createTask}>Insert</button>
 								</div>
 							)}
 						</Droppable>
