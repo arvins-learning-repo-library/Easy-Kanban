@@ -11,6 +11,19 @@ function getRandomId() {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
+Needed for IE compat since we can't use Array.flat() */
+function* flatten(array) {
+    for (const item of array) {
+        if (Array.isArray(item)) {
+            yield* flatten(item);
+        } else {
+            yield item;
+        }
+    }
+}
+
+
 class App extends React.Component {
 
 	state = {
@@ -117,7 +130,7 @@ class App extends React.Component {
 		let copiedTasks = this.state.tasks.slice(0)
 
 		// Get dragged item
-		let allTasks = copiedTasks.flat() // Combine subarrays, depth of 1
+		let allTasks = [...flatten(copiedTasks)] // Combine subarrays, depth of 1
 		let draggedItem = allTasks.find(x => x.id === result.draggableId)
 		console.log("Dragged: ", draggedItem)
 
