@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
+import Logo from './Logo.png';
 import './App.css';
 import Task from './Task';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
@@ -177,21 +177,24 @@ class App extends React.Component {
 					<DragDropContext onDragEnd={this.onDragEnd}>
 						<Droppable droppableId="delete">
 							{(provided) => (
-								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
-									<h1>Controls</h1>
+								<div class="col card" ref={provided.innerRef} {...provided.droppableProps}>
+									<h4>Controls</h4>
 
 									<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
 									<button onClick={this.createTask}>Insert</button>
-
-									<h5>🚮 Drag here to delete</h5>
+									<br />
+									<span class="card">🚮 Drag here to delete.</span>
+									<br />
+									<a target="_blank" href="https://taimoorapps.com"><img src={Logo} class="img-fluid"></img></a>
+									<br />
 								</div>
 							)}
 						</Droppable>
 
 						<Droppable droppableId="backlog">
 							{(provided) => (
-								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
-									<h1>Backlog</h1>
+								<div class="col card" ref={provided.innerRef} {...provided.droppableProps}>
+									<h4>Backlog</h4>
 
 									{this.state.tasks[0].map((item, index) => (
 										<Task id={item.id} text={item.text} index={index} />
@@ -204,8 +207,8 @@ class App extends React.Component {
 
 						<Droppable droppableId="todo">
 							{(provided) => (
-								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
-									<h1>Ready</h1>
+								<div class="col card" ref={provided.innerRef} {...provided.droppableProps}>
+									<h4>Ready</h4>
 
 									{this.state.tasks[1].map((item, index) => (
 										<Task id={item.id} text={item.text} index={index} />
@@ -218,8 +221,8 @@ class App extends React.Component {
 
 						<Droppable droppableId="doing">
 							{(provided) => (
-								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
-									<h1>In Progress</h1>
+								<div class="col card" ref={provided.innerRef} {...provided.droppableProps}>
+									<h4>Doing</h4>
 
 									{this.state.tasks[2].map((item, index) => (
 										<Task id={item.id} text={item.text} index={index} />
@@ -232,8 +235,8 @@ class App extends React.Component {
 
 						<Droppable droppableId="done">
 							{(provided) => (
-								<div class="col" ref={provided.innerRef} {...provided.droppableProps}>
-									<h1>Done!</h1>
+								<div class="col card" ref={provided.innerRef} {...provided.droppableProps}>
+									<h4>Done!</h4>
 
 									{this.state.tasks[3].map((item, index) => (
 										<Task id={item.id} text={item.text} index={index} />
@@ -245,7 +248,14 @@ class App extends React.Component {
 						</Droppable>
 					</DragDropContext>
 				</div>
-			</div >
+				<div class="row">
+					<div class="col">
+					<span>Changes are saved live, in your browser. Created by Taimoor Ahmad 2019.</span>
+					<br />
+					<span>Read "The Lean Startup" to learn more: <a href="https://amzn.to/2B93aui" target="_blank">USA</a> or <a href="https://amzn.to/2nLnYF7" target="_blank">Canada</a></span>
+					</div>
+				</div>
+			</div>
 		)
 	}
 }
