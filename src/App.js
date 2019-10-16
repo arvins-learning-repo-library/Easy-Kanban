@@ -256,7 +256,7 @@ class App extends React.Component {
 									<h4>Done!</h4>
 
 									{this.state.tasks[3].map((item, index) => (
-										<Task id={item.id} text={item.text} index={index} />
+										<Task done={true} id={item.id} text={item.text} index={index} />
 									))}
 
 									{provided.placeholder}
