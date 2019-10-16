@@ -14,13 +14,13 @@ function getRandomId() {
 /* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
 Needed for IE compat since we can't use Array.flat() */
 function* flatten(array) {
-    for (const item of array) {
-        if (Array.isArray(item)) {
-            yield* flatten(item);
-        } else {
-            yield item;
-        }
-    }
+	for (const item of array) {
+		if (Array.isArray(item)) {
+			yield* flatten(item);
+		} else {
+			yield item;
+		}
+	}
 }
 
 
@@ -84,7 +84,7 @@ class App extends React.Component {
 		}
 	}
 
-	createTask = event =>  {
+	createTask = event => {
 		event.preventDefault() // Prevent a page reload on pressing enter.
 
 		let input = this.state.entry.trim()
@@ -187,13 +187,14 @@ class App extends React.Component {
 	}
 
 	eraseBoard() {
-		this.setState({tasks: 
-			[
-				[],
-				[],
-				[],
-				[]
-			]
+		this.setState({
+			tasks:
+				[
+					[],
+					[],
+					[],
+					[]
+				]
 		})
 	}
 
@@ -212,8 +213,8 @@ class App extends React.Component {
 										<button type="submit">Insert</button>
 									</form>
 									<br />
-									<span style={{textAlign: "center"}} class="card">Drag tasks here to delete.</span>
-									<a href="#" class="card" style={{textAlign: "center"}}><span onClick={this.eraseBoard} >Click here to erase board.</span></a>
+									<span style={{ textAlign: "center" }} class="card">Drag tasks here to delete.</span>
+									<a href="#" class="card" style={{ textAlign: "center" }}><span onClick={this.eraseBoard} >Click here to erase board.</span></a>
 									<br />
 									<a target="_blank" href="https://taimoorapps.com"><img src={Logo} class="img-fluid"></img></a>
 									<br />
@@ -221,68 +222,86 @@ class App extends React.Component {
 							)}
 						</Droppable>
 
-						<Droppable droppableId="backlog">
-							{(provided) => (
-								<div class="col card" ref={provided.innerRef} {...provided.droppableProps}>
-									<h4>Backlog</h4>
 
-									{this.state.tasks[0].map((item, index) => (
-										<Task id={item.id} text={item.text} index={index} />
-									))}
+						<div class="col card">
+							<h4>Backlog</h4>
+							<Droppable droppableId="backlog">
+								{(provided) => (
+									<div style={{ height: 100 }}
+										ref={provided.innerRef}
+										{...provided.droppableProps}>
 
-									{provided.placeholder}
-								</div>
-							)}
-						</Droppable>
+										{this.state.tasks[0].map((item, index) => (
+											<Task id={item.id} text={item.text} index={index} />
+										))}
 
-						<Droppable droppableId="todo">
-							{(provided) => (
-								<div class="col card" ref={provided.innerRef} {...provided.droppableProps}>
-									<h4>Ready</h4>
+										{provided.placeholder}
+									</div>
+								)}
+							</Droppable>
+						</div>
 
-									{this.state.tasks[1].map((item, index) => (
-										<Task id={item.id} text={item.text} index={index} />
-									))}
 
-									{provided.placeholder}
-								</div>
-							)}
-						</Droppable>
+						<div class="col card">
+							<h4>To-do</h4>
+							<Droppable droppableId="todo">
+								{(provided) => (
+									<div style={{ height: 100 }}
+										ref={provided.innerRef}
+										{...provided.droppableProps}>
 
-						<Droppable droppableId="doing">
-							{(provided) => (
-								<div class="col card" ref={provided.innerRef} {...provided.droppableProps}>
-									<h4>Doing</h4>
+										{this.state.tasks[1].map((item, index) => (
+											<Task id={item.id} text={item.text} index={index} />
+										))}
 
-									{this.state.tasks[2].map((item, index) => (
-										<Task id={item.id} text={item.text} index={index} />
-									))}
+										{provided.placeholder}
+									</div>
+								)}
+							</Droppable>
+						</div>
 
-									{provided.placeholder}
-								</div>
-							)}
-						</Droppable>
+						<div class="col card">
+							<h4>Doing</h4>
+							<Droppable droppableId="doing">
+								{(provided) => (
+									<div style={{ height: 100 }}
+										ref={provided.innerRef}
+										{...provided.droppableProps}>
 
-						<Droppable droppableId="done">
-							{(provided) => (
-								<div class="col card" ref={provided.innerRef} {...provided.droppableProps}>
-									<h4>Done!</h4>
+										{this.state.tasks[2].map((item, index) => (
+											<Task id={item.id} text={item.text} index={index} />
+										))}
 
-									{this.state.tasks[3].map((item, index) => (
-										<Task done={true} id={item.id} text={item.text} index={index} />
-									))}
+										{provided.placeholder}
+									</div>
+								)}
+							</Droppable>
+						</div>
 
-									{provided.placeholder}
-								</div>
-							)}
-						</Droppable>
+						<div class="col card">
+							<h4>Done!</h4>
+							<Droppable droppableId="done">
+								{(provided) => (
+									<div style={{ height: 100 }}
+										ref={provided.innerRef}
+										{...provided.droppableProps}>
+
+										{this.state.tasks[3].map((item, index) => (
+											<Task done={true} id={item.id} text={item.text} index={index} />
+										))}
+
+										{provided.placeholder}
+									</div>
+								)}
+							</Droppable>
+						</div>
 					</DragDropContext>
 				</div>
 				<div class="row">
 					<div class="col">
-					<span>Changes are saved live, in your browser. Created by Taimoor Ahmad 2019.</span>
-					<br />
-					<span>Read "The Lean Startup" to learn more: <a href="https://amzn.to/2B93aui" target="_blank">USA</a> or <a href="https://amzn.to/2nLnYF7" target="_blank">Canada</a></span>
+						<span>Changes are saved live, in your browser. Created by Taimoor Ahmad 2019.</span>
+						<br />
+						<span>Read "The Lean Startup" to learn more: <a href="https://amzn.to/2B93aui" target="_blank">USA</a> or <a href="https://amzn.to/2nLnYF7" target="_blank">Canada</a></span>
 					</div>
 				</div>
 			</div>
