@@ -57,6 +57,7 @@ class App extends React.Component {
 		super()
 
 		this.createTask = this.createTask.bind(this)
+		this.eraseBoard = this.eraseBoard.bind(this)
 	}
 
 	componentDidMount() {
@@ -185,6 +186,17 @@ class App extends React.Component {
 		this.setState({ tasks: copiedTasks })
 	}
 
+	eraseBoard() {
+		this.setState({tasks: 
+			[
+				[],
+				[],
+				[],
+				[]
+			]
+		})
+	}
+
 	render() {
 		return (
 			<div class="container">
@@ -200,7 +212,8 @@ class App extends React.Component {
 										<button type="submit">Insert</button>
 									</form>
 									<br />
-									<span class="card">🚮 Drag here to delete.</span>
+									<span style={{textAlign: "center"}} class="card">Drag tasks here to delete.</span>
+									<a href="#" class="card" style={{textAlign: "center"}}><span onClick={this.eraseBoard} >Click here to erase board.</span></a>
 									<br />
 									<a target="_blank" href="https://taimoorapps.com"><img src={Logo} class="img-fluid"></img></a>
 									<br />
