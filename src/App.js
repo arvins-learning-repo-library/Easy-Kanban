@@ -203,24 +203,30 @@ class App extends React.Component {
 			<div class="container">
 				<div class="row">
 					<DragDropContext onDragEnd={this.onDragEnd}>
-						<Droppable droppableId="delete">
-							{(provided) => (
-								<div class="col card" ref={provided.innerRef} {...provided.droppableProps}>
-									<h4>Controls</h4>
 
-									<form onSubmit={this.createTask}>
-										<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
-										<button type="submit">Insert</button>
-									</form>
-									<br />
-									<span style={{ textAlign: "center" }} class="card">Drag tasks here to delete.</span>
-									<a href="#" class="card" style={{ textAlign: "center" }}><span onClick={this.eraseBoard} >Click here to erase board.</span></a>
-									<br />
-									<a target="_blank" href="https://taimoorapps.com"><img src={Logo} class="img-fluid"></img></a>
-									<br />
-								</div>
-							)}
-						</Droppable>
+						<div class="col card">
+							<h4>Controls</h4>
+
+							<form onSubmit={this.createTask}>
+								<input value={this.state.entry} type="text" name="input_text" onChange={event => this.setState({ entry: event.target.value })} />
+								<button type="submit">Insert</button>
+							</form>
+							<br />
+
+							<Droppable droppableId="delete">
+								{(provided) => (
+									<div class="card" ref={provided.innerRef} {...provided.droppableProps}>
+										<span style={{ textAlign: "center" }}>Drag tasks here to delete.</span>
+										<a href="#" style={{ textAlign: "center" }}><span onClick={this.eraseBoard} >Click here to erase board.</span></a>
+									</div>
+								)}
+							</Droppable>
+
+							<br />
+							<a target="_blank" href="https://taimoorapps.com"><img src={Logo} class="img-fluid"></img></a>
+							<br />
+						</div>
+
 
 
 						<div class="col card">
