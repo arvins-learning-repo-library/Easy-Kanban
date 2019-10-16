@@ -233,12 +233,12 @@ class App extends React.Component {
 							<h4>Backlog</h4>
 							<Droppable droppableId="backlog">
 								{(provided) => (
-									<div style={{ height: 100 }}
+									<div style={{ height: "100%" }}
 										ref={provided.innerRef}
 										{...provided.droppableProps}>
 
 										{this.state.tasks[0].map((item, index) => (
-											<Task id={item.id} text={item.text} index={index} />
+											<Task id={item.id} text={item.text} index={index}/>
 										))}
 
 										{provided.placeholder}
@@ -252,7 +252,7 @@ class App extends React.Component {
 							<h4>To-do</h4>
 							<Droppable droppableId="todo">
 								{(provided) => (
-									<div style={{ height: 100 }}
+									<div style={{ height: "100%" }}
 										ref={provided.innerRef}
 										{...provided.droppableProps}>
 
@@ -270,7 +270,7 @@ class App extends React.Component {
 							<h4>Doing</h4>
 							<Droppable droppableId="doing">
 								{(provided) => (
-									<div style={{ height: 100 }}
+									<div style={{ height: "100%" }}
 										ref={provided.innerRef}
 										{...provided.droppableProps}>
 
@@ -288,7 +288,7 @@ class App extends React.Component {
 							<h4>Done!</h4>
 							<Droppable droppableId="done">
 								{(provided) => (
-									<div style={{ height: 100 }}
+									<div style={{ height: "100%" }}
 										ref={provided.innerRef}
 										{...provided.droppableProps}>
 
