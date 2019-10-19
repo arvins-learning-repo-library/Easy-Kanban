@@ -307,7 +307,6 @@ class App extends React.Component {
 					<div class="col">
 						<span>Changes are saved live, in your browser. Created by Taimoor Ahmad 2019.</span>
 						<br />
-						<span>Read "The Lean Startup" to learn more: <a href="https://amzn.to/2B93aui" target="_blank">USA</a> or <a href="https://amzn.to/2nLnYF7" target="_blank">Canada</a></span>
 					</div>
 				</div>
 			</div>
